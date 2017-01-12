@@ -1,19 +1,27 @@
 package pl.poznan.put.cs.si.puttalky;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /** Author: agalawrynowicz<br>
  * Date: 19-Dec-2016 */
 
 public class Fakt {
 	
 	private String nazwa;
-	private String wartosc;
+	private Set<String> wartosc;
 	
 	public Fakt(){}
 	
-	public Fakt(String nazwa, String wartosc)
+	public Fakt(String nazwa, Set<String> wartosc)
 	{
 		this.nazwa=nazwa;
 		this.wartosc = wartosc;
+	}
+	public Fakt(String nazwa, String wartosc){
+		this.nazwa=nazwa;
+		this.wartosc = new HashSet<String>();
+		this.wartosc.add(wartosc);
 	}
 
 	
@@ -25,11 +33,11 @@ public class Fakt {
         this.nazwa = nazwa;
     }
 
-    public String getWartosc() {
+    public Set<String> getWartosc() {
         return this.wartosc;
     }
 
-    public void setWartosc(String wartosc) {
+    public void setWartosc(Set<String> wartosc) {
         this.wartosc = wartosc;
     }
 	

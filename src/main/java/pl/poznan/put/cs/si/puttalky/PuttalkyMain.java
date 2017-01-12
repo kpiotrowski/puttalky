@@ -1,5 +1,8 @@
 package pl.poznan.put.cs.si.puttalky;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -31,7 +34,7 @@ public class PuttalkyMain {
             
             Fakt fakt = new Fakt();
             fakt.setNazwa("");
-            fakt.setWartosc("-1");
+            fakt.setWartosc(new HashSet<String>());
             kSession.insert(fakt);
             kSession.insert(zamowienie);
             kSession.insert(ciasto);
