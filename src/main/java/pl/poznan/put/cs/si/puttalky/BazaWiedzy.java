@@ -91,7 +91,11 @@ public class BazaWiedzy {
 		for (OWLClass d:  baza.listaDodatkow){
 			System.out.println("dodatek: "+d.toString());
 		}
+	
+	}
 
+	public OWLOntologyManager getManager(){
+		return this.manager;
 	}
 
 }
