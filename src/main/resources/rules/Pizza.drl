@@ -39,7 +39,7 @@ rule "Podaj dodatki"
 	salience 2
 	
 	when
-		not Fakt(nazwa == "dodatek")
+		not Fakt(nazwa == "dodatki")
 		dodatek : Dodatek()
 		parser : Parser()
 		baza : BazaWiedzy()
@@ -47,12 +47,12 @@ rule "Podaj dodatki"
 		  dodatek.setMonit("Jaki dodatek powinna zawierać Twoja pizza?:\n");
 		  dodatek.zadajPytanie();
 		  parser.przetworzOdpowiedz();
-		 
-		for (String slowo : parser.getSlowaKluczowe()){
-			for (String uriKlasy : baza.dopasujDodatek(slowo)) { 
-		        insert(new Fakt("dodatek", uriKlasy));
-		    } 
-		}
+		
+		Set<String> dodatki = new java.util.HashSet(); 
+		for (String slowo : parser.getSlowaKluczowe())
+			for (String uriKlasy : baza.dopasujDodatek(slowo))
+		        dodatki.add(uriKlasy);
+		if(dodatki.size()>0) insert(new Fakt("dodatki",dodatki));
 		    		
 		//@TODO	brak dopasowania
 		
@@ -88,15 +88,14 @@ rule "Polecana pizza"
 	salience 1
 	
 	when
-		Fakt(nazwa == "dodatek") && 
+		Fakt(nazwa == "dodatki") && 
 		Fakt(nazwa == "rodzaj_ciasta") && 	
 		not Fakt(nazwa == "pizza_propozycja") &&
-        $dodatek : Fakt( nazwa == "dodatek")
+        $dodatek : Fakt( nazwa == "dodatki")
  		
 		baza: BazaWiedzy()
 		pizza: Pizza()
 	then
-
 		Set<String> pizze = baza.wyszukajPizzePoDodatkach($dodatek.getWartosc());
             
         if (pizze.size()>1){            		
@@ -110,17 +109,11 @@ rule "Polecana pizza"
 		}
 		else {
 			System.out.print("Przygotujemy pizzę specjalną z dodatkami: ");
-			System.out.println($dodatek.getWartosc().split("#")[1]);
+			for(String f :$dodatek.getWartosc()){
+				System.out.print(f.split("#")[1]+" ");
+			}
 	    	insert(new Fakt("pizza_propozycja", "Specjalna pizza"));
 	    }
-end
-
-
-rule "wyb�r pizzy"
-	when
-	not (Fakt(nazwa == "wybor")
-	then
-	
 end
 
 rule "zakończenie"

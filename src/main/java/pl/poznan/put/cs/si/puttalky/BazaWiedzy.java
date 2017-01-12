@@ -62,15 +62,17 @@ public class BazaWiedzy {
     	return result;
     }
     
-    public Set<String> wyszukajPizzePoDodatkach(String iri){
+    public Set<String> wyszukajPizzePoDodatkach(Set<String> dodatki){
     	Set<String> pizze = new HashSet<String>();
     	OWLObjectProperty maDodatek = manager.getOWLDataFactory().getOWLObjectProperty(IRI.create("http://semantic.cs.put.poznan.pl/ontologie/pizza.owl#maDodatek"));
     	Set<OWLClassExpression> ograniczeniaEgzystencjalne = new HashSet<OWLClassExpression>();
     	
-    	OWLClass dodatek = manager.getOWLDataFactory().getOWLClass(IRI.create(iri));
-    	OWLClassExpression wyrazenie = manager.getOWLDataFactory().getOWLObjectSomeValuesFrom(maDodatek, dodatek);
-    	ograniczeniaEgzystencjalne.add(wyrazenie);
-  	
+    	for(String iri : dodatki){
+	    	OWLClass dodatek = manager.getOWLDataFactory().getOWLClass(IRI.create(iri));
+	    	OWLClassExpression wyrazenie = manager.getOWLDataFactory().getOWLObjectSomeValuesFrom(maDodatek, dodatek);
+	    	ograniczeniaEgzystencjalne.add(wyrazenie);
+    	}
+    	
     	OWLClassExpression pozadanaPizza = manager.getOWLDataFactory().getOWLObjectIntersectionOf(ograniczeniaEgzystencjalne);
     	
 		for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: silnik.getSubClasses(pozadanaPizza, false)) {
