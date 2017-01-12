@@ -97,10 +97,13 @@ rule "Polecana pizza"
 		    }
 		}
 		else {
-			System.out.println(pizza.getBrakDopasowania());
+			System.out.print("Przygotujemy pizzę specjalną z dodatkami: ");
+			System.out.println($dodatek.getWartosc().split("#")[1]);
+			//System.out.println(pizza.getBrakDopasowania());
 	    }
-
 end
+
+
 
 
 rule "zakończenie"
