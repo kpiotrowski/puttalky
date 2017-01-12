@@ -64,8 +64,10 @@ public class Parser {
 			String token = new String("");
 			if (stem(s, slowo).length>1){
 				token = stem(s, slowo)[0];
-				tokeny.add(token);
-			} 
+			} else {
+				token = slowo.toLowerCase();
+			}
+			tokeny.add(token);
 		}
 		
 	    return tokeny.toArray(new String[tokeny.size()]);

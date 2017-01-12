@@ -113,7 +113,7 @@ rule "Polecana pizza"
 			for(String f :$dodatek.getWartosc()){
 				System.out.print(f.split("#")[1]+" ");
 			}
-	    	insert(new Fakt("pizza_propozycja", "Specjalna pizza"));
+	    	insert(new Fakt("koniec", "Specjalna pizza"));
 	    }
 end
 
@@ -124,9 +124,9 @@ rule "wybór pizzy"
 		pizza : Pizza() 
 		parser : Parser() 
 		baza: BazaWiedzy()
-//		zamowienie: Zamowienie()
+		zamowienie: Zamowienie()
 	then
-		pizza.setMonit("Podaj zamawianą pizzę:\n");
+		pizza.setMonit("\nPodaj zamawianą pizzę:\n");
 		pizza.zadajPytanie();
 		parser.przetworzOdpowiedz();
 		
@@ -138,6 +138,8 @@ rule "wybór pizzy"
 		}
 	//	update(zamowienie)
 end
+
+
 rule "zakończenie"
 
 	when
