@@ -25,5 +25,10 @@ public class Pizza extends Formatka {
 	public String getOpis() {
 		return this.opis;
 	}
+	
+	public void zadajPytanie()
+	{
+		System.out.println(getMonit()); 	
+	}
 
 }

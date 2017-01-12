@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import java.util.List;
 
 
 /** Author: agalawrynowicz<br>
@@ -44,7 +45,7 @@ rule "Podaj dodatki"
 		parser : Parser()
 		baza : BazaWiedzy()
 	then
-		  dodatek.setMonit("Jaki dodatek powinna zawierać Twoja pizza?:\n");
+		  dodatek.setMonit("Jaki dodatek powinna zawieraÄ‡ Twoja pizza?:\n");
 		  dodatek.zadajPytanie();
 		  parser.przetworzOdpowiedz();
 		 
@@ -104,31 +105,45 @@ rule "Polecana pizza"
 				insert(new Fakt("pizza_propozycja", nazwaPizzy));
 		    	//System.out.println();
 		    	if (!nazwaPizzy.equals("Nothing")){
-		       	   System.out.println("Polecam pizzę:"+nazwaPizzy);
+		       	   System.out.println("Polecam pizzÄ™:"+nazwaPizzy);
 		       	}
 		    }
 		}
 		else {
-			System.out.print("Przygotujemy pizzę specjalną z dodatkami: ");
+			System.out.print("Przygotujemy pizzÄ™Â specjalnÄ…Â z dodatkami: ");
 			System.out.println($dodatek.getWartosc().split("#")[1]);
 	    	insert(new Fakt("pizza_propozycja", "Specjalna pizza"));
 	    }
 end
 
 
-rule "wyb�r pizzy"
+rule "wybór pizzy"
 	when
-	not (Fakt(nazwa == "wybor")
+		not (Fakt(nazwa == "wybor")) &&
+		Fakt(nazwa == "pizza_propozycja") 
+		pizza : Pizza() 
+		parser : Parser() 
+		baza: BazaWiedzy()
+//		zamowienie: Zamowienie()
 	then
-	
+		pizza.setMonit("Podaj zamawianą pizzę:\n");
+		pizza.zadajPytanie();
+		parser.przetworzOdpowiedz();
+		
+		for (String slowo : parser.getSlowaKluczowe()){
+			for (String uriKlasy : baza.dopasujPizze(slowo)) { 
+				insert(new Fakt("wybor", "0"));
+		    	break;
+        	} 
+		}
+	//	update(zamowienie)
 end
 
-rule "zakończenie"
+rule "zakoÅ„czenie"
 
 	when
 		not (Fakt(nazwa == "koniec")) &&
-		Fakt(nazwa == "wybor") 
-
+		Fakt(nazwa == "wybor") &&
 		zamowienie : Zamowienie()
 	then
 		insert(new Fakt("koniec", "0"));

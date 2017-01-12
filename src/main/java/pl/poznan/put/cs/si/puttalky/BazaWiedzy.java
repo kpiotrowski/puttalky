@@ -2,7 +2,9 @@ package pl.poznan.put.cs.si.puttalky;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.kie.api.runtime.KieSession;
@@ -26,6 +28,7 @@ public class BazaWiedzy {
     private OWLOntology ontologia;
     private Set<OWLClass> listaKlas;
     private Set<OWLClass> listaDodatkow;
+    private Set<OWLClass> listaPizz;
     
     OWLReasoner silnik;
     
@@ -38,10 +41,15 @@ public class BazaWiedzy {
 			silnik = new Reasoner.ReasonerFactory().createReasoner(ontologia);
 			listaKlas = ontologia.getClassesInSignature();
 			listaDodatkow = new HashSet<OWLClass>();
-
+			listaPizz = new HashSet<OWLClass>();
 			OWLClass dodatek  = manager.getOWLDataFactory().getOWLClass(IRI.create("http://semantic.cs.put.poznan.pl/ontologie/pizza.owl#Dodatek"));
 			for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: silnik.getSubClasses(dodatek, false)) {
 				listaDodatkow.add(klasa.getRepresentativeElement());
+			}
+			
+			OWLClass pizza  = manager.getOWLDataFactory().getOWLClass(IRI.create("http://semantic.cs.put.poznan.pl/ontologie/pizza.owl#Pizza"));
+			for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: silnik.getSubClasses(pizza, false)) {
+				listaPizz.add(klasa.getRepresentativeElement());
 			}
 			
 			
@@ -98,4 +106,40 @@ public class BazaWiedzy {
 		return this.manager;
 	}
 
+//	public List<String> listaPodKlass(String iri){
+//		List<String> list = new ArrayList<String>();
+//		OWLClass mainClass = this.manager.getOWLDataFactory().getOWLClass(IRI.create(iri));
+//		list = checkList(list, mainClass);
+////		for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: this.silnik.getSubClasses(mainClass , true)) {
+////			//System.out.println("klasa:"+klasa.toString());
+////			
+////			list.add(klasa.toString());
+////		}
+//		
+//		return list;
+//	}
+//	public List<String> checkList(List<String> primaryList,OWLClass mainClass){
+//		boolean found = false;
+//		for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: this.silnik.getSubClasses(mainClass , true)) {
+//			primaryList = checkList(primaryList, klasa.getRepresentativeElement());
+//			//System.out.println("klasa:"+klasa.toString());
+//		}
+//		if(!found){
+//			primaryList.add(this.silnik.getEquivalentClasses(mainClass).toString());	
+//		}
+//		return primaryList;
+//	}
+//	
+
+    public Set<String> dopasujPizze(String s){
+    	Set<String> result = new HashSet<String>();
+    	for (OWLClass klasa : listaPizz){
+    		System.out.println(klasa.toString());
+    		if (klasa.toString().toLowerCase().contains(s.toLowerCase())){
+    			result.add(klasa.getIRI().toString());
+    		}
+    	}
+    	return result;
+    }
+    
 }
