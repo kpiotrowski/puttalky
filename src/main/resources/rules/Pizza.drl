@@ -100,13 +100,15 @@ rule "Polecana pizza"
 		Set<String> pizze = baza.wyszukajPizzePoDodatkach($dodatek.getWartosc());
             
         if (pizze.size()>1){            		
+			Set<String> pizzeSet = new java.util.HashSet(); 
 			for (String nazwaPizzy : pizze) {
-				insert(new Fakt("pizza_propozycja", nazwaPizzy));
-		    	//System.out.println();
-		    	if (!nazwaPizzy.equals("Nothing")){
-		       	   System.out.println("Polecam pizzÄ™:"+nazwaPizzy);
+				if (!nazwaPizzy.equals("Nothing")){
+		       		pizzeSet.add(nazwaPizzy);
+		       	   //System.out.println("Polecam pizzÄ™:"+nazwaPizzy);
 		       	}
 		    }
+		    insert(new Fakt("pizza_propozycja", pizzeSet));
+		    	
 		}
 		else {
 			System.out.print("Przygotujemy pizzę specjalną z dodatkami: ");
@@ -120,12 +122,16 @@ end
 rule "wybór pizzy"
 	when
 		not (Fakt(nazwa == "wybor")) &&
-		Fakt(nazwa == "pizza_propozycja") 
+		$pizze : Fakt(nazwa == "pizza_propozycja") 
 		pizza : Pizza() 
 		parser : Parser() 
 		baza: BazaWiedzy()
 		zamowienie: Zamowienie()
 	then
+		System.out.println("Polecane pizze: ");
+		for (String slowo : $pizze.getWartosc()){
+			System.out.println(slowo);
+		}
 		pizza.setMonit("\nPodaj zamawianą pizzę:\n");
 		pizza.zadajPytanie();
 		parser.przetworzOdpowiedz();
@@ -136,9 +142,8 @@ rule "wybór pizzy"
 		    	break;
         	} 
 		}
-	//	update(zamowienie)
+	update(pizza)
 end
-
 
 rule "zakończenie"
 
