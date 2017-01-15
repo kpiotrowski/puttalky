@@ -93,6 +93,7 @@ public class BazaWiedzy {
     
     public Set<String> dopasujPizze(String s){
     	Set<String> result = new HashSet<String>();
+    	if(s.length()<3) return result;
     	for (OWLClass klasaPizza : listaPizz){
     		if (klasaPizza.toString().toLowerCase().contains(s.toLowerCase())){
     			result.add(klasaPizza.getIRI().toString());
