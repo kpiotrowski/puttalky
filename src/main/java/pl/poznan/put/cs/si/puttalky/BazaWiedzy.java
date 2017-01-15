@@ -138,30 +138,11 @@ public class BazaWiedzy {
 		return this.manager;
 	}
 
-//	public List<String> listaPodKlass(String iri){
-//		List<String> list = new ArrayList<String>();
-//		OWLClass mainClass = this.manager.getOWLDataFactory().getOWLClass(IRI.create(iri));
-//		list = checkList(list, mainClass);
-////		for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: this.silnik.getSubClasses(mainClass , true)) {
-////			//System.out.println("klasa:"+klasa.toString());
-////			
-////			list.add(klasa.toString());
-////		}
-//		
-//		return list;
-//	}
-//	public List<String> checkList(List<String> primaryList,OWLClass mainClass){
-//		boolean found = false;
-//		for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: this.silnik.getSubClasses(mainClass , true)) {
-//			primaryList = checkList(primaryList, klasa.getRepresentativeElement());
-//			//System.out.println("klasa:"+klasa.toString());
-//		}
-//		if(!found){
-//			primaryList.add(this.silnik.getEquivalentClasses(mainClass).toString());	
-//		}
-//		return primaryList;
-//	}
-//	
+	public void utworzListePizz(Set<String> pizze){
+		for (String pizza : pizze){
+			listaPizz.add(manager.getOWLDataFactory().getOWLClass(IRI.create(pizza)));
+		}
+	}
 
-    
+	
 }
