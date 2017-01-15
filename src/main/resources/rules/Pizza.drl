@@ -135,7 +135,7 @@ rule "wybór pizzy"
 		pizza.setMonit("\nPodaj zamawianą pizzę:\n");
 		pizza.zadajPytanie();
 		parser.przetworzOdpowiedz();
-		//baza.utworzListePizz($pizze.getWartosc());
+		baza.utworzListePizz($pizze.getWartosc());
 		for (String slowo : parser.getSlowaKluczowe()){
 			for (String uriKlasy : baza.dopasujPizze(slowo)) { 
 				insert(new Fakt("wybor", "0"));

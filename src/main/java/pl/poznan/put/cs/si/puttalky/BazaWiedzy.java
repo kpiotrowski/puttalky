@@ -30,6 +30,7 @@ public class BazaWiedzy {
     private Set<OWLClass> listaKlas;
     private Set<OWLClass> listaDodatkow;
     private Set<OWLClass> listaPizz;
+    private Set<String> proponowanePizze;
     
     OWLReasoner silnik;
     
@@ -43,11 +44,11 @@ public class BazaWiedzy {
 			listaKlas = ontologia.getClassesInSignature();
 			listaDodatkow = new HashSet<OWLClass>();
 			listaPizz = new HashSet<OWLClass>();
+			proponowanePizze= new HashSet<String>();
 			OWLClass dodatek  = manager.getOWLDataFactory().getOWLClass(IRI.create("http://semantic.cs.put.poznan.pl/ontologie/pizza.owl#Dodatek"));
 			for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: silnik.getSubClasses(dodatek, false)) {
 				listaDodatkow.add(klasa.getRepresentativeElement());
 			}
-			
 			OWLClass pizza  = manager.getOWLDataFactory().getOWLClass(IRI.create("http://semantic.cs.put.poznan.pl/ontologie/pizza.owl#Pizza"));
 			for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: silnik.getSubClasses(pizza, false)) {
 				listaPizz.add(klasa.getRepresentativeElement());
@@ -109,6 +110,14 @@ public class BazaWiedzy {
     			}
     		}
     	}
+		Set<String> check = new HashSet<String>();
+		for (String nazwa : result){
+			if (proponowanePizze.contains(nazwa)){
+				check.add(nazwa);
+			};
+		}
+		result = check;
+
     	for(String ss :result) System.out.println("ZWRACA "+ss);
     	return result;
     }
@@ -140,8 +149,15 @@ public class BazaWiedzy {
 	}
 
 	public void utworzListePizz(Set<String> pizze){
+		
 		for (String pizza : pizze){
-			listaPizz.add(manager.getOWLDataFactory().getOWLClass(IRI.create(pizza)));
+			for (OWLClass klasaPizza : this.listaPizz){
+				if (klasaPizza.toString().toLowerCase().contains(pizza.toLowerCase())){
+					proponowanePizze.add(klasaPizza.getIRI().toString());	
+	    			break;
+				}
+			}
+			
 		}
 	}
 
