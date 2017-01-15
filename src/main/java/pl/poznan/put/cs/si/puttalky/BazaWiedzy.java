@@ -95,9 +95,14 @@ public class BazaWiedzy {
     public Set<String> dopasujPizze(String s){
     	Set<String> result = new HashSet<String>();
     	if(s.length()<3) return result;
+    	boolean czyBez = s.toLowerCase().contains("bez ");
+    	if(czyBez) s = s.substring(4);
+
     	for (OWLClass klasaPizza : listaPizz){
-    		if (klasaPizza.toString().toLowerCase().contains(s.toLowerCase())){
-    			result.add(klasaPizza.getIRI().toString());
+    		boolean ifVar = klasaPizza.toString().toLowerCase().contains(s.toLowerCase());
+    		if(czyBez) ifVar = !ifVar;
+    		if (ifVar){
+    			if(!czyBez)result.add(klasaPizza.getIRI().toString());
     			NodeSet<OWLClass> selected = silnik.getSubClasses(klasaPizza, false);
     			if(!selected.isEmpty()){
     				for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: selected) {
