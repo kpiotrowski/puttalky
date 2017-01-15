@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
 /** Author: agalawrynowicz<br>
@@ -89,6 +90,35 @@ public class BazaWiedzy {
 	
 		return pizze;
     }
+    
+    public Set<String> dopasujPizze(String s){
+    	Set<String> result = new HashSet<String>();
+    	for (OWLClass klasaPizza : listaPizz){
+    		if (klasaPizza.toString().toLowerCase().contains(s.toLowerCase())){
+    			result.add(klasaPizza.getIRI().toString());
+    			NodeSet<OWLClass> selected = silnik.getSubClasses(klasaPizza, false);
+    			if(!selected.isEmpty()){
+    				for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: selected) {
+    					Set<OWLClass> set = klasa.getEntitiesMinusBottom();
+    					if(!set.isEmpty()){
+        					result.remove(klasaPizza.getIRI().toString());
+    						result.add(set.iterator().next().asOWLClass().getIRI().toString());
+    					}
+	    			}
+    			}
+    		}
+    	}
+    	for(String ss :result) System.out.println("ZWRACA "+ss);
+    	return result;
+    }
+    
+    public Set<String> wyszukajPizze(String s){
+    	Set<String> pizze = new HashSet<String>();
+
+    	OWLClass pizza = manager.getOWLDataFactory().getOWLClass(IRI.create(s));
+    	
+    	return pizze;
+    }
 	
 	public static void main(String[] args) {
 		BazaWiedzy baza = new BazaWiedzy();
@@ -133,14 +163,5 @@ public class BazaWiedzy {
 //	}
 //	
 
-    public Set<String> dopasujPizze(String s){
-    	Set<String> result = new HashSet<String>();
-    	for (OWLClass klasa : listaPizz){
-    		if (klasa.toString().toLowerCase().contains(s.toLowerCase())){
-    			result.add(klasa.getIRI().toString());
-    		}
-    	}
-    	return result;
-    }
     
 }

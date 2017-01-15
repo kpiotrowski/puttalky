@@ -20,7 +20,6 @@ public class PuttalkyMain {
 	        KieServices ks = KieServices.Factory.get();
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
-
         	
             Zamowienie zamowienie = new Zamowienie();
             Ciasto ciasto = new Ciasto();
