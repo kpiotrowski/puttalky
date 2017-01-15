@@ -92,8 +92,8 @@ public class BazaWiedzy {
 		return pizze;
     }
     
-    public Set<String> dopasujPizze(String s){
-    	Set<String> result = new HashSet<String>();
+    public List<String> dopasujPizze(String s){
+    	List<String> result = new ArrayList<String>();
     	if(s.length()<3) return result;
     	for (OWLClass klasaPizza : listaPizz){
     		if (klasaPizza.toString().toLowerCase().contains(s.toLowerCase())){
@@ -110,15 +110,18 @@ public class BazaWiedzy {
     			}
     		}
     	}
-		Set<String> check = new HashSet<String>();
+		List<String> check = new ArrayList<String>();
 		for (String nazwa : result){
 			if (proponowanePizze.contains(nazwa)){
 				check.add(nazwa);
 			};
 		}
-		result = check;
-
-    	for(String ss :result) System.out.println("ZWRACA "+ss);
+		result.clear();
+		for (String pizza : check){
+			String[] temp = pizza.split("#");
+			result.add(temp[1]);
+		}
+		for(String ss :result) System.out.println("ZWRACA "+ss);
     	return result;
     }
     

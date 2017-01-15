@@ -137,10 +137,12 @@ rule "wybór pizzy"
 		parser.przetworzOdpowiedz();
 		baza.utworzListePizz($pizze.getWartosc());
 		for (String slowo : parser.getSlowaKluczowe()){
-			for (String uriKlasy : baza.dopasujPizze(slowo)) { 
+			List<String> result = baza.dopasujPizze(slowo);
+			if (!result.isEmpty()){
+				System.out.println("Wybrana pizza to: " + result.get(0));
 				insert(new Fakt("wybor", "0"));
-		    	break;
-        	} 
+		    	break; 
+			}
 		}
 	update(pizza)
 end
