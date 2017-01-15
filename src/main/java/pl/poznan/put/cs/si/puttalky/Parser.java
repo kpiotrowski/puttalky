@@ -60,14 +60,20 @@ public class Parser {
 		
 		PolishStemmer s = new PolishStemmer();
 		
+		String prefix="";
 		for (String slowo : slowa){ 
+			if(slowo.equals("bez")){
+				prefix="bez ";
+				continue;
+			}
 			String token = new String("");
 			if (stem(s, slowo).length>1){
-				token = stem(s, slowo)[0];
+				token = prefix+stem(s, slowo)[0];
 			} else {
-				token = slowo.toLowerCase();
+				token = prefix+slowo.toLowerCase();
 			}
 			tokeny.add(token);
+			prefix="";
 		}
 		
 	    return tokeny.toArray(new String[tokeny.size()]);
