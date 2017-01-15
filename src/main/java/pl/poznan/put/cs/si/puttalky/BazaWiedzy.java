@@ -99,23 +99,29 @@ public class BazaWiedzy {
     	if(czyBez) s = s.substring(4);
 
     	for (OWLClass klasaPizza : listaPizz){
-    		boolean ifVar = klasaPizza.toString().toLowerCase().contains(s.toLowerCase());
-    		if(czyBez) ifVar = !ifVar;
-    		if (ifVar){
-    			if(!czyBez)result.add(klasaPizza.getIRI().toString());
+    		if (klasaPizza.toString().toLowerCase().contains(s.toLowerCase())){
+    			result.add(klasaPizza.getIRI().toString());
     			NodeSet<OWLClass> selected = silnik.getSubClasses(klasaPizza, false);
     			if(!selected.isEmpty()){
     				for (org.semanticweb.owlapi.reasoner.Node<OWLClass> klasa: selected) {
     					Set<OWLClass> set = klasa.getEntitiesMinusBottom();
     					if(!set.isEmpty()){
-        					result.remove(klasaPizza.getIRI().toString());
+        					if(!czyBez) result.remove(klasaPizza.getIRI().toString());
     						result.add(set.iterator().next().asOWLClass().getIRI().toString());
     					}
 	    			}
     			}
     		}
     	}
-		List<String> check = new ArrayList<String>();
+    	if(czyBez){
+    		List<String> tmp = new ArrayList<String>();
+    		for (OWLClass klasaPizza : listaPizz) tmp.add(klasaPizza.getIRI().toString());
+    		for (String sss:result) tmp.remove(sss);
+    		result=tmp;
+    	}
+
+    	
+    	List<String> check = new ArrayList<String>();
 		for (String nazwa : result){
 			if (proponowanePizze.contains(nazwa)){
 				check.add(nazwa);
@@ -126,7 +132,6 @@ public class BazaWiedzy {
 			String[] temp = pizza.split("#");
 			result.add(temp[1]);
 		}
-		for(String ss :result) System.out.println("ZWRACA "+ss);
     	return result;
     }
     
