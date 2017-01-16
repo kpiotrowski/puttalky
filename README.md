@@ -1,22 +1,71 @@
-# Jak uruchomić PUTtalky?
-## NetBeans 8.2
-1. *File*->*Open Project*
-2. Wskazać katalog z plikiem `pom.xml`
-3. *Run*->*Run Project (puttalky)*
-4. W oknie *Select Main Class for Execution* wskazać `com.sample.DroolsTest`
-5. Kliknąć *Select Main Class*
+#Przykładowe wyniki programu
 
-## Eclipse Neon
-1. *File*->*Import*->*Maven*->*Existing Maven Project*
-2. *Browse*
-2. Wskazać katalog z plikiem `pom.xml`
-3. *Finish*
-4. Prawym na `puttalky`
-5. *Run As* -> *Java Application*
-6. Wskazać `DroolsTest` z pakietu `com.sample`
-7. Kliknąć *OK*
+>Jaki dodatek powinna zawierać Twoja pizza?:<br/>
+<b>cebule</b><br/>
+Podaj rodzaj ciasta:<br/>
+<b>cienkie</b><br/>
+Przygotujemy pizzę specjalną z dodatkami: Cebula<br/>
+<br/>
+<br/>
+Jaki dodatek powinna zawierać Twoja pizza?:<br/>
+<b>ser</b><br/>
+Podaj rodzaj ciasta:<br/>
+<b>cienkie</b><br/>
+Polecane pizze: <br/>
+Margherita<br/>
+Vesuvio<br/>
+Pepperoni<br/>
+Podaj zamawianą pizzę:<br/>
+<b>Poproszę wegetaria</b><br/>
+Wybrana pizza to: Margherita<br/>
+Dziękuję za skorzystanie z moich usług. <br/>
+Życzę smacznego!<br/>
+<br/>
+<br/>
+Jaki dodatek powinna zawierać Twoja pizza?:<br/>
+<b>ser</b><br/>
+Podaj rodzaj ciasta:<br/>
+<b>cienkie</b><br/>
+Polecane pizze: <br/>
+Margherita<br/>
+Vesuvio<br/>
+Pepperoni<br/>
+Podaj zamawianą pizzę:<br/>
+<b>Poproszę Vesuvio</b><br/>
+Wybrana pizza to: Vesuvio<br/>
+Dziękuję za skorzystanie z moich usług. <br/>
+Życzę smacznego!<br/>
+<br/>
+<br/>
+Jaki dodatek powinna zawierać Twoja pizza?:<br/>
+<b>Poproszę z kiełbasą i serem<b><br/>
+Podaj rodzaj ciasta:<br/>
+<b>Poproszę cienkie<b><br/>
+Polecane pizze: <br/>
+Pepperoni<br/>
+Podaj zamawianą pizzę:<br/>
+<b>Poproszę vesuvio<b><br/>
+Polecane pizze: <br/>
+Pepperoni<br/>
+Podaj zamawianą pizzę:<br/>
+<b>Poproszę pepperoni<b><br/>
+Wybrana pizza to: Pepperoni<br/>
+Dziękuję za skorzystanie z moich usług. <br/>
+Życzę smacznego!<br/>
+<br/>
+<br/>
+Jaki dodatek powinna zawierać Twoja pizza?:<br/>
+<b>ser</b><br/>
+Podaj rodzaj ciasta:<br/>
+<b>cienkie</b><br/>
+Polecane pizze: <br/>
+Margherita<br/>
+Vesuvio<br/>
+Pepperoni<br/>
+Podaj zamawianą pizzę:<br/>
+<b>Poproszę bez Mięs</b><br/>
+Wybrana pizza to: Margherita<br/>
+Dziękuję za skorzystanie z moich usług. <br/>
+Życzę smacznego!<br/>
 
-## Wiersz poleceń
-1. Przejść do katalogu ze źródłami
-2. `mvn package`
-3. `java -jar target/puttalky-1.0-SNAPSHOT.jar`
+
